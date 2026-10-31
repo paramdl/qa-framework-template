@@ -2,9 +2,7 @@ name: QA Suite
 
 on:
   workflow_dispatch:
-  pull_request:
-  schedule:
-    - cron: '0 2 * * *' # nightly full run
+  # Add pull_request / schedule triggers once BASE_URL points at a real target.
 
 jobs:
   qa:
