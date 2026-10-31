@@ -1,0 +1,46 @@
+{
+  "name": "Example Client",
+  "baseUrl": "https://example.com",
+  "sitemapUrl": "https://example.com/sitemap.xml",
+  "pages": [
+    { "path": "/", "name": "Home", "group": "core" },
+    { "path": "/about", "name": "About", "group": "content" },
+    { "path": "/pricing", "name": "Pricing", "group": "core" },
+    { "path": "/contact", "name": "Contact", "group": "content" }
+  ],
+  "seo": {
+    "titleMin": 20,
+    "titleMax": 65,
+    "descriptionMin": 70,
+    "descriptionMax": 165,
+    "requireCanonical": true,
+    "requireOgImage": true
+  },
+  "security": {
+    "requireHsts": true,
+    "requireCsp": true,
+    "requireFrameOptions": true,
+    "requireNoSniff": true,
+    "requireReferrerPolicy": true,
+    "forbidServerVersion": true
+  },
+  "perf": { "maxLoadMs": 5000, "maxTransferKb": 3500 },
+  "a11y": {
+    "tags": ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"],
+    "disableRules": [],
+    "failOn": ["critical", "serious"]
+  },
+  "links": {
+    "ignorePatterns": ["mailto:", "tel:", "javascript:", "#"],
+    "checkExternal": false
+  },
+  "api": {
+    "healthPath": "/health",
+    "publicEndpoints": [{ "method": "get", "path": "/api/v1/status", "expect": 200 }]
+  },
+  "capabilities": {
+    "paymentGateway": { "enabled": false, "mode": "test", "note": "payment gateway - checkout, subscriptions, tips, wallet top-ups" },
+    "smtp": { "enabled": false, "note": "outgoing email - password reset, notifications, receipts" },
+    "liveStreaming": { "enabled": false, "note": "live/video streaming" }
+  }
+}

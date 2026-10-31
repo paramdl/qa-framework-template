@@ -1,0 +1,42 @@
+{
+  "name": "qa-framework-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "smoke": "playwright test --project=guest-chromium tests/smoke",
+    "seo": "playwright test --project=guest-chromium tests/seo",
+    "api": "playwright test --project=api",
+    "authed": "playwright test --project=authed-admin",
+    "report": "playwright show-report reports/html",
+    "summarize": "node scripts/summarize.mjs",
+    "typecheck": "tsc --noEmit",
+    "new": "node scripts/new-project.mjs",
+    "test": "playwright test",
+    "a11y": "playwright test --project=guest-chromium tests/a11y",
+    "security": "playwright test --project=guest-chromium tests/security",
+    "perf": "playwright test --project=guest-chromium tests/perf",
+    "links": "playwright test --project=guest-chromium tests/smoke/links.spec.ts",
+    "discover": "node scripts/discover.mjs",
+    "bvt": "playwright test --project=guest-chromium tests/bvt",
+    "verify": "node scripts/verify.mjs",
+    "report:build": "node scripts/build-report.mjs",
+    "report:reset": "node scripts/reset-reports.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": "true",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.4.0",
+    "axe-core": "^4.13.0",
+    "dotenv": "^17.4.2",
+    "typescript": "^7.0.2"
+  }
+}

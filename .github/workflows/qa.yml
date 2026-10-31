@@ -1,0 +1,49 @@
+name: QA Suite
+
+on:
+  workflow_dispatch:
+  pull_request:
+  schedule:
+    - cron: '0 2 * * *' # nightly full run
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: Run suite
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+          AUTH_ROLES: ${{ vars.AUTH_ROLES }}
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          # PRs run a fast subset; the nightly schedule runs everything.
+          PAGE_LIMIT: ${{ github.event_name == 'pull_request' && '10' || '0' }}
+        run: npx playwright test --shard=${{ matrix.shard }}/4
+
+      - name: Summarize findings
+        if: always()
+        run: node scripts/summarize.mjs "${{ github.repository }}"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qa-report-shard-${{ matrix.shard }}
+          path: |
+            reports/
+            test-results/
+          retention-days: 14
